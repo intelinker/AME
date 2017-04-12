@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class ArticleController extends Controller
+class ApiArticleController extends Controller
 {
     public function index()
     {
@@ -42,7 +43,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
-        return view('article.show', compact($article));
+        return $article;
     }
 
     /**
@@ -78,6 +79,5 @@ class ArticleController extends Controller
     {
         //
     }
-
 
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserPositionsTable extends Migration
+class CreateKeysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateUserPositionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_positions', function (Blueprint $table) {
+        Schema::create('keys', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('is_person')->default(1);
             $table->string('name');
             $table->string('description');
             $table->timestamps();
@@ -29,6 +28,6 @@ class CreateUserPositionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_positions');
+        Schema::dropIfExists('keys');
     }
 }

@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
-class ArticleController extends Controller
+class ApiUserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -19,7 +24,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -30,7 +35,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
@@ -41,8 +46,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::findOrFail($id);
-        return view('article.show', compact($article));
+        //
     }
 
     /**
@@ -53,7 +57,7 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -65,7 +69,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //
     }
 
     /**
@@ -79,5 +83,17 @@ class ArticleController extends Controller
         //
     }
 
+    public function mailCaptcha(Request $request) {
+        $data = ['mail'=>$request['mail'], 'name'=>$request['name'], 'uid'=>$request['uid']];
+//        dd($data);
+        Mail::send('user.activemail', $data, function($message) use($data)
+        {
+            $captcha = random_int(100000, 999999);
 
+            $message->to($data['mail'])->subject('Welcom register AME! Your captcha:'.$captcha);
+
+//            return ['captcha' => $captcha,
+//                    'result' => 'success',];
+        });
+    }
 }

@@ -21,4 +21,12 @@ class Document extends Model
     public function execleDoc() {
         return $this->hasOne('App\ExcelDoc');
     }
+
+    public function mediaResources() {
+        return $this->morphMany(MediaResource::class, 'resourcetable');
+    }
+
+    public function keys() {
+        return $this->morphMany(Key::class, 'keystable');
+    }
 }

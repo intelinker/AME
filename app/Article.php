@@ -31,4 +31,20 @@ class Article extends Model
     public function favorited() {
         return $this->belongsTo('App\FavoriteArticles');
     }
+
+    public function mediaResources() {
+        return $this->morphMany(MediaResource::class, 'resourcetable');
+    }
+
+    public function keys() {
+        return $this->morphMany(Key::class, 'keystable');
+    }
+
+    public function forward() {
+        return $this->hasMany('App\Article');
+    }
+
+    public function forwarded() {
+        return $this->belongsTo('App\Article', 'forward');
+    }
 }

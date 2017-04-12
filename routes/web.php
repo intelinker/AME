@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('article', 'ArticleController');
+
+//Route::group(['prefix'=>'article'], function(){
+//});

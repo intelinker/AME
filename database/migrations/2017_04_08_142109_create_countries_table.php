@@ -19,7 +19,7 @@ class CreateCountriesTable extends Migration
             $table->string('zh_name');
             $table->string('description')->nullable();
             $table->integer('language_id')->nullable()->references('id')->on('languages');
-            $table->string('zip');
+            $table->string('area_code');
             $table->timestamps();
         });
     }

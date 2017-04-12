@@ -15,7 +15,7 @@ class CreateUserTitlesTable extends Migration
     {
         Schema::create('user_titles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('isperson')->default(1);
+            $table->integer('is_person')->default(1);
             $table->string('name');
             $table->string('description');
             $table->timestamps();

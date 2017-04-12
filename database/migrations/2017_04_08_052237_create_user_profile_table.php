@@ -16,6 +16,7 @@ class CreateUserProfileTable extends Migration
         Schema::create('user_profile', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->references('id')->on('users');
+            $table->string('real_name')->default();
             $table->integer('related_account_id')->nullable()->references('id')->on('users');
             $table->integer('airport_id')->nullable()->references('id')->on('airports');
             $table->string('title')->nullable();
