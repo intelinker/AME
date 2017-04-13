@@ -39,11 +39,12 @@ class ApiUserController extends Controller
         $user = new User();
         $user->name = $request['name'];
         $user->password = bcrypt($request['password']);
+        $user->uid = $request['uid'];
 //        $user->remember_token = $request['_token'];
         $user->phone = $request['phone'];
         $user->avatar= '/images/avatar.png';
         $user->save();
-        return redirect('/');
+        return ['result'=>'success', 'user'=>$user];
     }
 
     /**
@@ -92,13 +93,13 @@ class ApiUserController extends Controller
     }
 
     public function mailCaptcha(Request $request) {
-        $user = User::where('mail', $request['mail'])->get();
+        $user = User::where('email', $request['email'])->get();
         if(count($user)) {
             return [
               'result'=>'exist',
             ];
         }
-        $data = ['mail'=>$request['mail'], 'name'=>$request['name'], 'uid'=>$request['uid'], 'captcha'=>random_int(100000, 999999)];
+        $data = ['mail'=>$request['email'], 'name'=>$request['name'], 'uid'=>$request['uid'], 'captcha'=>random_int(100000, 999999)];
 //        dd($data);
         Mail::send('user.activemail', $data, function($message) use($data)
         {
