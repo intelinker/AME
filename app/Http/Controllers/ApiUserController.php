@@ -36,12 +36,13 @@ class ApiUserController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request);
         $user = new User();
         $user->name = $request['name'];
         $user->password = bcrypt($request['password']);
         $user->uid = $request['uid'];
 //        $user->remember_token = $request['_token'];
-        $user->phone = $request['phone'];
+        $user->email = $request['email'];
         $user->avatar= '/images/avatar.png';
         $user->save();
         return ['result'=>'success', 'user'=>$user];
