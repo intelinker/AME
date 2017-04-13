@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,7 +36,14 @@ class ApiUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->name = $request['name'];
+        $user->password = bcrypt($request['password']);
+//        $user->remember_token = $request['_token'];
+        $user->phone = $request['phone'];
+        $user->avatar= '/images/avatar.png';
+        $user->save();
+        return redirect('/');
     }
 
     /**
@@ -84,16 +92,23 @@ class ApiUserController extends Controller
     }
 
     public function mailCaptcha(Request $request) {
-        $data = ['mail'=>$request['mail'], 'name'=>$request['name'], 'uid'=>$request['uid']];
+        $user = User::where('mail', $request['mail'])->get();
+        if(count($user)) {
+            return [
+              'result'=>'exist',
+            ];
+        }
+        $data = ['mail'=>$request['mail'], 'name'=>$request['name'], 'uid'=>$request['uid'], 'captcha'=>random_int(100000, 999999)];
 //        dd($data);
         Mail::send('user.activemail', $data, function($message) use($data)
         {
-            $captcha = random_int(100000, 999999);
+//            $captcha = random_int(100000, 999999);
 
-            $message->to($data['mail'])->subject('Welcom register AME! Your captcha:'.$captcha);
+            $message->to($data['mail'])->subject('Welcom register AME!');
 
-//            return ['captcha' => $captcha,
-//                    'result' => 'success',];
+
         });
+        return ['captcha' => $data['captcha'],
+            'result' => 'success',];
     }
 }

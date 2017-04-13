@@ -17,6 +17,7 @@ class CreateUserProfileTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->references('id')->on('users');
             $table->string('real_name')->default();
+            $table->string('self_intro')->nullable();
             $table->integer('related_account_id')->nullable()->references('id')->on('users');
             $table->integer('airport_id')->nullable()->references('id')->on('airports');
             $table->string('title')->nullable();
@@ -24,7 +25,6 @@ class CreateUserProfileTable extends Migration
             $table->string('organization')->nullable();
             $table->integer('country_id')->nullable()->references('id')->on('countries');
             $table->integer('language_id')->nullable()->references('id')->on('languages');
-            $table->string('phone')->nullable();
             $table->tinyInteger('gender')->default(1);
             $table->string('location')->nullable();
             $table->double('lat')->nullable();

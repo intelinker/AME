@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => 'smtp',//env('MAIL_DRIVER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     */
 
     // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-    'host' => env('MAIL_HOST', 'smtp.163.com'),
+    'host' => 'smtp.163.com',//env('MAIL_HOST', 'smtp.163.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -44,7 +44,7 @@ return [
     */
 
     // 'port' => env('MAIL_PORT', 587),
-    'port' => env('MAIL_PORT', 25),
+    'port' => '25',//'465',//env('MAIL_PORT', 465),
 
     /*
     |--------------------------------------------------------------------------
@@ -58,8 +58,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_USERNAME', 'intelinker@163.com'),
-        'name' => env('MAIL_FROM_NAME', 'AME'),
+        'address' => 'intelinker@163.com',//env('MAIL_USERNAME', 'intelinker@163.com'),
+        'name' => 'ame',//env('MAIL_FROM_NAME', 'AME'),
     ],
 
 
@@ -74,7 +74,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => null,////'ssl',//env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -89,7 +89,7 @@ return [
 
     'username' => 'intelinker@163.com',//env('MAIL_USERNAME'),
 
-    'password' => env('MAIL_PASSWORD'),
+    'password' => 'New2017World',//'qweasd@123',//env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
