@@ -200,4 +200,28 @@ class ApiUserController extends Controller
             'avatar'=>$filePath,
         ];
     }
+
+    public function setcover(Request $request) {
+        $userID = $request['userid'];
+        $file = $request->file('cover');
+        $destPath='media/users/'.$userID.'/cover/';
+        // Create target dir
+        if (!file_exists($destPath)) {
+            @mkdir($destPath );
+        }
+        $filename = $userID.'_'.time().$file->getClientOriginalName();
+        $filePath = $destPath.$filename;
+        $thumbPath = $destPath.'thumb_'.$filename;
+        $file->move($destPath, $filename);
+        $imageSize = GetImageSize($filePath);
+        // resizing an uploaded file
+        Image::make($filePath)->resize(320, (int)((320 * $imageSize[1]) / $imageSize[0]))->save($thumbPath);
+        $user = User::find($userID);
+        $user->cover = $filePath;
+        $user->save();
+        return [
+            'result'=>'success',
+            'cover'=>$filePath,
+        ];
+    }
 }

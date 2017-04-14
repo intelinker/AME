@@ -23,4 +23,6 @@ Route::group(['prefix'=>'v1'], function() {
     Route::get('mailcaptcha', 'ApiUserController@mailCaptcha');
     Route::post('login', 'ApiUserController@signin');
     Route::post('setavatar', 'ApiUserController@setavatar');
+    Route::post('setcover', 'ApiUserController@setcover');
+
 });
