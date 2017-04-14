@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_person')->default(1);
             $table->string('account_id')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('cover')->nullable();
             $table->integer('account_type')->default(1)->references('id')->on('account_type');
             $table->integer('status')->default(1)->references('id')->on('user_status');
             $table->string('uid')->nullable();

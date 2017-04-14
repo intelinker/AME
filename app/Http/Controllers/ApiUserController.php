@@ -43,13 +43,17 @@ class ApiUserController extends Controller
     public function store(Request $request)
     {
 //        dd($request);
+        $email = $request['email'];
+        if(count(User::where('email', $email)->first()))
+            return ['result' => 'exist'];
         $user = new User();
         $user->name = $request['name'];
         $user->password = bcrypt($request['password']);
         $user->uid = $request['uid'];
 //        $user->remember_token = $request['_token'];
         $user->email = $request['email'];
-        $user->avatar= '/media/users/avatar.png';
+        $user->avatar = '/media/users/avatar.jpg';
+        $user->cover = '/media/users/cover.jpg';
         $user->save();
         $profile = new Profile();
         $profile->user_id=$user->id;
@@ -73,6 +77,8 @@ class ApiUserController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'avatar' => $user->avatar,
+            'cover' =>$user->cover,
+            'is_person' => $user->is_person,
             'self_intro' => $user->profile->self_intro,
             'title' => $user->profile->title,
             'position' => $user->profile->position,
