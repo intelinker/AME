@@ -21,4 +21,6 @@ Route::group(['prefix'=>'v1'], function() {
     Route::resource('article', 'ApiArticleController');
     Route::resource('user', 'ApiUserController');
     Route::get('mailcaptcha', 'ApiUserController@mailCaptcha');
+    Route::post('login', 'ApiUserController@signin');
+    Route::post('setavatar', 'ApiUserController@setavatar');
 });

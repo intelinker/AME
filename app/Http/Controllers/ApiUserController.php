@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class ApiUserController extends Controller
 {
@@ -43,7 +47,7 @@ class ApiUserController extends Controller
         $user->uid = $request['uid'];
 //        $user->remember_token = $request['_token'];
         $user->email = $request['email'];
-        $user->avatar= '/images/avatar.png';
+        $user->avatar= '/media/users/avatar.png';
         $user->save();
         return ['result'=>'success', 'user'=>$user];
     }
@@ -112,5 +116,50 @@ class ApiUserController extends Controller
         });
         return ['captcha' => $data['captcha'],
             'result' => 'success',];
+    }
+
+    public function signin(Request $request) {
+//        dd($request->all());
+        $email = $request['email'];
+        $user = User::where('email', $email)->first();
+//        dd($user->email);
+//        if(count($user) && $user->password==bcrypt($request['password']))
+        if(Auth::attempt([
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+
+        ]))
+            return ['result'=>'success', 'user'=>[
+                'id' => $user->id,
+                'name' => $user->name,
+                'avatar' => $user->avatar,
+                'uid' => $user->uid,
+            ]];
+        return ['result' => 'error'];
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect('/');
+    }
+
+    public function setavatar(Request $request) {
+        $userID = $request['userid'];
+        $file = $request->file('avatar');
+        $destPath='media/users/'.$userID.'/avatar/';
+        $filename = $userID.'_'.time().$file->getClientOriginalName();
+        $filePath = $destPath.$filename;
+        $thumbPath = $destPath.'thumb_'.$filename;
+        $file->move($destPath, $filename);
+        $imageSize = GetImageSize($filePath);
+        // resizing an uploaded file
+        Image::make($filePath)->resize(80, (int)((80 * $imageSize[1]) / $imageSize[0]))->save($thumbPath);
+        $user = User::find($userID);
+        $user->avatar = $filePath;
+        $user->save();
+        return [
+            'result'=>'success',
+            'avatar'=>$filePath,
+        ];
     }
 }
