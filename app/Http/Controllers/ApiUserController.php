@@ -85,6 +85,7 @@ class ApiUserController extends Controller
             'airport' =>$user->profile->airport,
             'following' => count($user->relation),
             'followed' => count($user->related),
+            'uid' => $user->uid,
         ];
     }
 
@@ -150,14 +151,22 @@ class ApiUserController extends Controller
 //        dd($user->email);
 //        if(count($user) && $user->password==bcrypt($request['password']))
         if(Auth::attempt([
-            'email' => $request->get('email'),
-            'password' => $request->get('password'),
+            'email' => $email,
+            'password' => $request['password'],
 
         ]))
             return ['result'=>'success', 'user'=>[
                 'id' => $user->id,
                 'name' => $user->name,
                 'avatar' => $user->avatar,
+                'cover' =>$user->cover,
+                'is_person' => $user->is_person,
+                'self_intro' => $user->profile->self_intro,
+                'title' => $user->profile->title,
+                'position' => $user->profile->position,
+                'airport' =>$user->profile->airport,
+                'following' => count($user->relation),
+                'followed' => count($user->related),
                 'uid' => $user->uid,
             ]];
         return ['result' => 'error'];
