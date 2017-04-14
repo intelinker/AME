@@ -147,6 +147,10 @@ class ApiUserController extends Controller
         $userID = $request['userid'];
         $file = $request->file('avatar');
         $destPath='media/users/'.$userID.'/avatar/';
+        // Create target dir
+        if (!file_exists($destPath)) {
+            @mkdir($destPath );
+        }
         $filename = $userID.'_'.time().$file->getClientOriginalName();
         $filePath = $destPath.$filename;
         $thumbPath = $destPath.'thumb_'.$filename;
