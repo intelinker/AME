@@ -19,7 +19,8 @@ class CreateUserProfileTable extends Migration
             $table->string('real_name')->default();
             $table->string('self_intro')->nullable();
             $table->integer('related_account_id')->nullable()->references('id')->on('users');
-            $table->integer('airport_id')->nullable()->references('id')->on('airports');
+//            $table->integer('airport_id')->nullable()->references('id')->on('airports');
+            $table->string('airport')->nullable();
             $table->string('title')->nullable();
             $table->string('position')->nullable();
             $table->string('organization')->nullable();

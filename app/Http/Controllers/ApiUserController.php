@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Profile;
+use App\Setup;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +51,12 @@ class ApiUserController extends Controller
         $user->email = $request['email'];
         $user->avatar= '/media/users/avatar.png';
         $user->save();
+        $profile = new Profile();
+        $profile->user_id=$user->id;
+        $profile->save();
+        $setup = new Setup();
+        $setup->user_id = $user->id;
+        $setup->save();
         return ['result'=>'success', 'user'=>$user];
     }
 
@@ -60,7 +68,18 @@ class ApiUserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'avatar' => $user->avatar,
+            'self_intro' => $user->profile->self_intro,
+            'title' => $user->profile->title,
+            'position' => $user->profile->position,
+            'airport' =>$user->profile->airport,
+            'following' => count($user->relation),
+            'followed' => count($user->related),
+        ];
     }
 
     /**

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    //    protected $table = "diaries";
+        protected $table = "user_profile";
 
     protected $fillable = [
 //        'title', 'description', 'content', 'avatar', 'created_by', 'updated_by',
@@ -20,9 +20,9 @@ class Profile extends Model
         return $this->hasOne('App\Country', 'country_id');
     }
 
-    public function airport() {
-        return $this->hasOne('App\Airport', 'airport_id');
-    }
+//    public function airport() {
+//        return $this->hasOne('App\Airport', 'airport_id');
+//    }
 
     public function language() {
         return $this->hasOne('App\Language', 'language_id');
