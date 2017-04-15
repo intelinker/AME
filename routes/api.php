@@ -25,5 +25,7 @@ Route::group(['prefix'=>'v1'], function() {
     Route::post('setavatar', 'ApiUserController@setavatar');
     Route::post('setcover', 'ApiUserController@setcover');
     Route::post('selfintro', 'ApiUserController@selfintro');
-
+    Route::post('maininfo', 'ApiSetupController@maininfo');
+    Route::get('loadtitles', 'ApiSetupController@loadTitles');
+    Route::get('loadpositions', 'ApiSetupController@loadPositions');
 });

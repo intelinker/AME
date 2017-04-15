@@ -233,4 +233,5 @@ class ApiUserController extends Controller
         $user->profile->save();
         return ['result'=>'success'];
     }
+
 }
