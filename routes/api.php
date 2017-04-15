@@ -24,5 +24,6 @@ Route::group(['prefix'=>'v1'], function() {
     Route::post('login', 'ApiUserController@signin');
     Route::post('setavatar', 'ApiUserController@setavatar');
     Route::post('setcover', 'ApiUserController@setcover');
+    Route::post('selfintro', 'ApiUserController@selfintro');
 
 });

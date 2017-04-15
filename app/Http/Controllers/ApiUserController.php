@@ -185,13 +185,14 @@ class ApiUserController extends Controller
         if (!file_exists($destPath)) {
             @mkdir($destPath );
         }
-        $filename = $userID.'_'.time().$file->getClientOriginalName();
+        $filename = trim($userID.'_'.time().$file->getClientOriginalName(), ' ');
         $filePath = $destPath.$filename;
         $thumbPath = $destPath.'thumb_'.$filename;
         $file->move($destPath, $filename);
         $imageSize = GetImageSize($filePath);
         // resizing an uploaded file
         Image::make($filePath)->resize(80, (int)((80 * $imageSize[1]) / $imageSize[0]))->save($thumbPath);
+//        Image::make($filePath)->fit(80)->save();
         $user = User::find($userID);
         $user->avatar = $filePath;
         $user->save();
@@ -209,7 +210,8 @@ class ApiUserController extends Controller
         if (!file_exists($destPath)) {
             @mkdir($destPath );
         }
-        $filename = $userID.'_'.time().$file->getClientOriginalName();
+
+        $filename = str_replace([' ', ':'], ['', ''], $userID.'_'.time().$file->getClientOriginalName());
         $filePath = $destPath.$filename;
         $thumbPath = $destPath.'thumb_'.$filename;
         $file->move($destPath, $filename);
@@ -223,5 +225,12 @@ class ApiUserController extends Controller
             'result'=>'success',
             'cover'=>$filePath,
         ];
+    }
+
+    public function selfintro(Request $request) {
+        $user = User::findOrFail($request['userid']);
+        $user->profile->self_intro = $request['selfintro'];
+        $user->profile->save();
+        return ['result'=>'success'];
     }
 }
