@@ -51,9 +51,11 @@ $factory->define(App\UserRelation::class, function (Faker\Generator $faker) {
     $relationID = $faker->randomElement($userIDs);
     $repeat = true;
     while($userID == $relationID || $repeat) {
-        $relationID = $faker->randomElement($userIDs);
         $relation = App\UserRelation::where('user_id', $userID)->where('relation_id', $relationID)->first();
-        $repeat = count($relation) ? true : false;
+        if(count($relation)) {
+            $relationID = $faker->randomElement($userIDs);
+        } else
+            $repeat = false;
     }
     return [
         'user_id' => $userID,
@@ -78,13 +80,22 @@ $factory->define(App\Comment::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\MediaResource::class, function (Faker\Generator $faker) {
-    $articleIDs = \App\MediaResource::pluck('id')->toArray();
-    $userIDs = \App\User::pluck('id')->toArray();
-    $ownerID = $faker->randomElement($userIDs);
+    $articleIDs = \App\Article::pluck('id')->toArray();
+    $id = $faker->randomElement($articleIDs);
+    $order = $faker->biasedNumberBetween(1, 4);
+    $repeat = true;
+    while($repeat) {
+        $resource = \App\MediaResource::where('resourcetable_id', $id)->where('order', $order)->first();
+        if(count($resource)) {
+            $id = $faker->randomElement($articleIDs);
+            $order = $faker->biasedNumberBetween(1, 4);
+        } else
+            $repeat = false;
+    }
     return [
-        'article_id' => $faker->randomElement($articleIDs),
-        'content' => $faker->paragraph(2, true),
-        'updated_by' => $ownerID,
-        'created_by' => $ownerID,
+        'resourcetable_type' => 'App\Article',
+        'resourcetable_id' => $id,
+        'url' => $faker->imageUrl(320, 320),
+        'order' => $order,
     ];
 });

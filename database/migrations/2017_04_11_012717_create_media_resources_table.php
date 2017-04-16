@@ -18,7 +18,7 @@ class CreateMediaResourcesTable extends Migration
             $table->string('resourcetable_type');
             $table->integer('resourcetable_id');
             $table->string('url');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->integer('order')->default(1);
             $table->integer('duration')->default(0);
             $table->tinyInteger('status')->default(1)->reference('id')->on('article_status');

@@ -113,6 +113,7 @@ class ApiArticleController extends Controller
                 'total_comments' => count($article->comments),
                 'forwarded' => count($article->forwarded),
                 'favorited' => count($article->favorited),
+                'avatar' => $article->user->avatar,
 //                'comments' => $this->loadComments($article->id, 1, 0),
             ]);
         }
