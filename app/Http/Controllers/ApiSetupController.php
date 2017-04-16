@@ -54,4 +54,13 @@ class ApiSetupController extends Controller
         $user->setup->save();
         return ['result'=>'success'];
     }
+
+    public function privacyInfo(Request $request) {
+        $user = User::findOrFail($request['userid']);
+        $user->setup->privacy_protected = $request['privacy'];
+        $user->setup->friends_found = $request['friendsfound'];
+        $user->setup->phone_found = $request['phonefound'];
+        $user->setup->save();
+        return ['result'=>'success'];
+    }
 }
