@@ -34,4 +34,14 @@ class ApiSetupController extends Controller
         return Country::all();
     }
 
+    public function personalInfo(Request $request) {
+        $user = User::findOrFail($request['userid']);
+        $user->email = $request['email'];
+        $user->phone = $request['phone'];
+        $user->profile->gender = $request['gender'];
+        $user->save();
+        $user->profile->save();
+        return ['result'=>'success'];
+    }
+
 }
