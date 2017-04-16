@@ -46,4 +46,12 @@ class ApiSetupController extends Controller
         return ['result'=>'success'];
     }
 
+    public function aogInfo(Request $request) {
+        $user = User::findOrFail($request['userid']);
+        $user->setup->recieve_local_aog = $request['localaog'];
+        $user->setup->recieve_global_aog = $request['globalaog'];
+        $user->setup->aog_support = $request['supportaog'];
+        $user->setup->save();
+        return ['result'=>'success'];
+    }
 }

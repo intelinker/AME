@@ -30,5 +30,6 @@ Route::group(['prefix'=>'v1'], function() {
     Route::get('loadpositions', 'ApiSetupController@loadPositions');
     Route::get('loadcountries', 'ApiSetupController@loadCountries');
     Route::post('personalinfo', 'ApiSetupController@personalInfo');
+    Route::post('aoginfo', 'ApiSetupController@aogInfo');
 
 });
