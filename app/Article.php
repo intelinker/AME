@@ -29,7 +29,7 @@ class Article extends Model
     }
 
     public function favorited() {
-        return $this->belongsTo('App\FavoriteArticles');
+        return $this->belongsTo('App\FavoriteArticle');
     }
 
     public function mediaResources() {
@@ -40,11 +40,12 @@ class Article extends Model
         return $this->morphMany(Key::class, 'keystable');
     }
 
-    public function forward() {
-        return $this->hasMany('App\Article');
+    public function original() {
+        return $this->belongsTo('App\User', 'original_id');
     }
 
     public function forwarded() {
-        return $this->belongsTo('App\Article', 'forward');
+        return $this->hasMany('App\Article', 'original_id');//count(Article::findOrFail('original_id')); //
     }
+
 }

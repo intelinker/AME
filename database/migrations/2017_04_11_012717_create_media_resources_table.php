@@ -15,8 +15,8 @@ class CreateMediaResourcesTable extends Migration
     {
         Schema::create('media_resources', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('resourceable_type');
-            $table->integer('resourceable_id');
+            $table->string('resourcetable_type');
+            $table->integer('resourcetable_id');
             $table->string('url');
             $table->string('name');
             $table->integer('order')->default(1);

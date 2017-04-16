@@ -10,12 +10,16 @@ class Comment extends Model
         'article_id', 'status', 'content', 'created_by', 'updated_by',
     ];
 
+//    protected $hidden = [
+//        'password', 'remember_token', 'email', 'phone', 'account_id', 'cover', 'uid',
+//    ];
+
     public function user() {
         return $this->belongsTo('App\User', 'created_by');
     }
 
     public function article() {
-        return $this->belongsTo('App\Article', 'article_id');
+        return $this->belongsTo('App\Article', 'aritcle_id');
     }
 
     public function status() {

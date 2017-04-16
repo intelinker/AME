@@ -17,4 +17,8 @@ class UserRelation extends Model
     public function relation() {
         return $this->hasMany('App\User', 'relation_id');
     }
+
+    public function type() {
+        return $this->hasOne('App\RelationType', 'relation_type');
+    }
 }
