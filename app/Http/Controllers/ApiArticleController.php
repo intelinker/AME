@@ -114,6 +114,7 @@ class ApiArticleController extends Controller
                 'forwarded' => count($article->forwarded),
                 'favorited' => count($article->favorited),
                 'avatar' => $article->user->avatar,
+                'thumb' => $article->mediaResources->first()['url'],
 //                'comments' => $this->loadComments($article->id, 1, 0),
             ]);
         }
