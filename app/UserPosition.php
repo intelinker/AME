@@ -11,6 +11,6 @@ class UserPosition extends Model
     ];
 
     public function profile() {
-        return $this->belongsTo('App\Profile');
+        return $this->hasMany('App\Profile');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\UserPosition;
 use App\UserTitle;
 use Illuminate\Http\Request;
@@ -27,4 +28,10 @@ class ApiSetupController extends Controller
 //        dd($request['isperson']);
         return UserPosition::Where('is_person', $request['isperson'])->get();
     }
+
+    public function loadCountries(Request $request) {
+//        dd($request['isperson']);
+        return Country::all();
+    }
+
 }

@@ -25,7 +25,7 @@ class Profile extends Model
 //    }
 
     public function language() {
-        return $this->hasOne('App\Language', 'language_id');
+        return $this->belongsTo('App\Language', 'language_id');
     }
 
     public function relatedUser() {
@@ -33,11 +33,11 @@ class Profile extends Model
     }
 
     public function title() {
-        return $this->hasOne('App\UserTitle', 'title');
+        return $this->belongsTo('App\UserTitle', 'title');
     }
 
     public function position() {
-        return $this->hasOne('App\UserPosition', 'position');
+        return $this->belongsTo('App\UserPosition', 'position');
     }
 
     public function relation() {

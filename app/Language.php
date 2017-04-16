@@ -13,7 +13,7 @@ class Language extends Model
     ];
 
     public function profile() {
-        return $this->belongsTo('App\Profile');
+        return $this->belongsTo('App\Profile', 'language_id');
     }
 
     public function article() {
