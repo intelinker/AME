@@ -36,8 +36,10 @@ class ApiSetupController extends Controller
 
     public function personalInfo(Request $request) {
         $user = User::findOrFail($request['userid']);
-        $user->email = $request['email'];
-        $user->phone = $request['phone'];
+        if($request['email'])
+            $user->email = $request['email'];
+        if($request['phone'])
+            $user->phone = $request['phone'];
         $user->profile->gender = $request['gender'];
         $user->save();
         $user->profile->save();
