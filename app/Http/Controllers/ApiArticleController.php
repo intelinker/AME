@@ -47,7 +47,26 @@ class ApiArticleController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
-        return $article;
+        return [
+            'id' => $article->id,
+            'original_id' => $article->original_id,
+            'original_user'=> $article->original->user,
+            'user' => $article->user,
+//            'original_user_id' => $article->original->user->id,
+//            'original_user_name' => $article->original->user->name,
+//            'original_user_avatar' => $article->original->user->avatar,
+//            'user_id' => $article->updated_by,
+//            'user_name' => $article->user->name,
+//            'user_avatar' => $article->user->avatar,
+//            'user_airport' => $article->user->profile->airport,
+            'content' => $article->content,
+            'update_at' => $article->updated_at,
+            'total_comments' => count($article->comments),
+            'forwarded' => count($article->forwarded),
+            'favorited' => count($article->favorited),
+            'resources' => $article->mediaResources->take(4),
+//                'comments' => $this->loadComments($article->id, 1, 0),
+        ];
     }
 
     /**
@@ -92,6 +111,7 @@ class ApiArticleController extends Controller
 //            ->leftJoin('users', 'users.id', '=', 'articles.original_id')
             ->select('articles.*')
             ->where('user_relations.user_id', $request['userid'])
+            ->orWhere('articles.created_by', $request['userid'])
             ->where('status', '1');
         if($lastid && $lastid > 0)
             $articles = $articles->where('articles.id', '<=', $lastid);
@@ -105,15 +125,18 @@ class ApiArticleController extends Controller
             array_push($acitivities, [
                 'id' => $article->id,
                 'original_id' => $article->original_id,
-                'original_name' => $article->original->name,
-                'user_id' => $article->updated_by,
-                'user_name' => $article->user->name,
+                'user' => $article->user,
+//                'original_user_id' => $article->original->user->id,
+//                'original_user_name' => $article->original->user->name,
+//                'original_user_avatar' => $article->original->user->avatar,
+//                'user_id' => $article->updated_by,
+//                'user_name' => $article->user->name,
+//                'user_avatar' => $article->user->avatar,
                 'content' => $article->content,
                 'update_at' => $article->updated_at,
                 'total_comments' => count($article->comments),
                 'forwarded' => count($article->forwarded),
                 'favorited' => count($article->favorited),
-                'avatar' => $article->user->avatar,
                 'thumb' => $article->mediaResources->first()['url'],
 //                'comments' => $this->loadComments($article->id, 1, 0),
             ]);

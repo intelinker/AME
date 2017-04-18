@@ -20,7 +20,7 @@ class CreateUserProfileTable extends Migration
             $table->string('self_intro')->nullable();
             $table->integer('related_account_id')->nullable()->references('id')->on('users')->onDelete('cascade');
 //            $table->integer('airport_id')->nullable()->references('id')->on('airports');
-            $table->string('airport')->nullable();
+//            $table->string('airport')->nullable();
             $table->string('title')->nullable()->references('id')->on('user_titles')->onDelete('cascade');
             $table->string('position')->nullable()->references('id')->on('user_positions')->onDelete('cascade');
             $table->string('organization')->nullable();

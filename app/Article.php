@@ -41,7 +41,7 @@ class Article extends Model
     }
 
     public function original() {
-        return $this->belongsTo('App\User', 'original_id');
+        return $this->belongsTo('App\Article', 'original_id');
     }
 
     public function forwarded() {
