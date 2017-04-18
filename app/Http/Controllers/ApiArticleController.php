@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiArticleController extends Controller
 {
     public $articleLimit = 15;
-    public $commentLimit = 20;
+//    public $commentLimit = 20;
 
     public function index()
     {
@@ -65,7 +65,7 @@ class ApiArticleController extends Controller
             'forwarded' => count($article->forwarded),
             'favorited' => count($article->favorited),
             'resources' => $article->mediaResources->take(4),
-//                'comments' => $this->loadComments($article->id, 1, 0),
+                'comments' => $this->loadComments($article->id, 1, 0, 2),
         ];
     }
 
@@ -144,14 +144,14 @@ class ApiArticleController extends Controller
         return $acitivities;
     }
 
-    public function loadComments($id, $page, $lastid) {
-        $from = ($page -1) * $this->commentLimit;
+    public function loadComments($id, $page, $lastid, $limit = 20) {
+        $from = ($page -1) * $limit;
         $comments = Comment::where('article_id', $id)
                         ->leftJoin('users', 'users.id', '=', 'comments.updated_by')
                         ->select('comments.*', 'users.name', 'users.avatar');
         if($lastid && $lastid > 0)
             $comments = $comments->where('comments.id', '<=', $lastid);
-        $comments = $comments->skip($from)->take($this->commentLimit)->get();
+        $comments = $comments->skip($from)->take($limit)->get();
         return $comments;
     }
 }
