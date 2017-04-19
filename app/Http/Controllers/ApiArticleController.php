@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiArticleController extends Controller
 {
     public $articleLimit = 15;
-//    public $commentLimit = 20;
+    public $commentLimit = 20;
 
     public function index()
     {
@@ -65,7 +65,7 @@ class ApiArticleController extends Controller
             'forwarded' => count($article->forwarded),
             'favorited' => count($article->favorited),
             'resources' => $article->mediaResources->take(4),
-                'comments' => $this->loadComments($article->id, 1, 0, 2),
+            'comments' => $this->loadComments($article->id, 1, 0, $this->commentLimit),
         ];
     }
 
@@ -126,7 +126,7 @@ class ApiArticleController extends Controller
                 'id' => $article->id,
                 'original_id' => $article->original_id,
                 'user' => $article->user,
-//                'original_user_id' => $article->original->user->id,
+                'original_user' => $article->original->user,
 //                'original_user_name' => $article->original->user->name,
 //                'original_user_avatar' => $article->original->user->avatar,
 //                'user_id' => $article->updated_by,
@@ -137,8 +137,9 @@ class ApiArticleController extends Controller
                 'total_comments' => count($article->comments),
                 'forwarded' => count($article->forwarded),
                 'favorited' => count($article->favorited),
-                'thumb' => $article->mediaResources->first()['url'],
-//                'comments' => $this->loadComments($article->id, 1, 0),
+//                'thumb' => $article->mediaResources->first()['url'],
+                'resources' => $article->mediaResources->take(4),
+                'comments' => $this->loadComments($article->id, 1, 0, 2),
             ]);
         }
         return $acitivities;
