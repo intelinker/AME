@@ -62,7 +62,7 @@ class ApiArticleController extends Controller
             'content' => $article->content,
             'update_at' => $article->updated_at,
             'total_comments' => count($article->comments),
-            'forwarded' => count($article->forwarded),
+            'forwarded' => count($article->original),
             'favorited' => count($article->favorited),
             'resources' => $article->mediaResources->take(4),
             'comments' => $this->loadComments($article->id, 1, 0, $this->commentLimit),
@@ -106,13 +106,21 @@ class ApiArticleController extends Controller
     public function followingActivities(Request $request) {
         $lastid = $request['lastid'];
         $from = ($request['page'] -1) * $this->articleLimit;
-        $articles = Article::join('user_relations', 'user_relations.relation_id', '=', 'articles.created_by')
+        $userid = $request['userid'];
+        $articles = array();
+        if($userid) {
+            $articles = Article::join('user_relations', 'user_relations.relation_id', '=', 'articles.created_by')
+                ->select('articles.*')
+                ->where('user_relations.user_id', $userid)
+                ->orWhere('articles.created_by', $userid);
+        } else {
+            $articles = Article::select('articles.*');
+        }
+
 //            ->leftJoin('users', 'users.id', '=', 'articles.updated_by')
 //            ->leftJoin('users', 'users.id', '=', 'articles.original_id')
-            ->select('articles.*')
-            ->where('user_relations.user_id', $request['userid'])
-            ->orWhere('articles.created_by', $request['userid'])
-            ->where('status', '1');
+
+        $articles = $articles ->where('status', '1');
         if($lastid && $lastid > 0)
             $articles = $articles->where('articles.id', '<=', $lastid);
 

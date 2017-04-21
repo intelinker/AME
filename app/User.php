@@ -71,4 +71,8 @@ class User extends Authenticatable
         return $this->hasMany('App\FavoriteDocument');
     }
 
+    public function location() {
+        return $this->morphOne(Location::class, 'locationtable');
+    }
+
 }

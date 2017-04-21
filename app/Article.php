@@ -48,4 +48,8 @@ class Article extends Model
         return $this->hasMany('App\Article', 'original_id');//count(Article::findOrFail('original_id')); //
     }
 
+    public function location() {
+        return $this->morphOne(Location::class, 'locationtable');
+    }
+
 }
