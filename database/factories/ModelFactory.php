@@ -41,7 +41,7 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'content' => $faker->paragraph(5, true),
         'updated_by' => $ownerID,
         'created_by' => $ownerID,
-        'location' =>$faker->address,
+//        'location' =>$faker->address,
     ];
 });
 
