@@ -73,9 +73,12 @@ $factory->define(App\UserRelation::class, function (Faker\Generator $faker) {
     $relationTypes = \App\RelationType::pluck('id')->toArray();
     $userID = $faker->randomElement($userIDs);
     $relationID = $faker->randomElement($userIDs);
-    $locations = \App\Location::pluck('id')->toArray();
+//    $locations = \App\Location::pluck('id')->toArray();
+    while ($userID == $relationID) {
+        $relationID = $faker->randomElement($userIDs);
+    }
     $repeat = true;
-    while($userID == $relationID || $repeat) {
+    while($repeat) {
         $relation = App\UserRelation::where('user_id', $userID)->where('relation_id', $relationID)->first();
         if(count($relation)) {
             $relationID = $faker->randomElement($userIDs);
@@ -89,7 +92,7 @@ $factory->define(App\UserRelation::class, function (Faker\Generator $faker) {
         'review_articles' => $faker->boolean(80) ? 1 : 0,
         'articles_reviewed' => $faker->boolean(80) ? 1 : 0,
         'notify_activities' => $faker->boolean(70) ? 1 : 0,
-        'location' =>$faker->randomElement($locations),
+//        'location' =>$faker->randomElement($locations),
     ];
 });
 
