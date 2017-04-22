@@ -63,8 +63,8 @@ $factory->define(App\Location::class, function (Faker\Generator $faker) {
         'address' => $faker->address,
         'locationtable_type' => 'App\Article',
         'locationtable_id' => $articleID,
-        'x' => $faker->latitude,
-        'y' => $faker->longitude,
+        'lat' => $faker->latitude,
+        'lng' => $faker->longitude,
     ];
 });
 
