@@ -80,8 +80,8 @@ class ApiUserController extends Controller
             'cover' =>$user->cover,
             'is_person' => $user->is_person,
             'self_intro' => $user->profile->self_intro,
-            'title' => $user->profile->title,
-            'position' => $user->profile->position,
+            'title' => $user->profile->title->name,
+            'position' => $user->profile->position->positon,
             'airport' =>$user->airport,
             'following' => count($user->relation),
             'followed' => count($user->related),
@@ -172,7 +172,7 @@ class ApiUserController extends Controller
 //                array_merge($result['user'],  ['title' => $user->profile->title->name]);
             }
             if($user->profile && $user->profile->position) {
-                $result['user']['position'] =  $user->profile->position->name;
+                $result['user']['position'] =  $user->profile->position-->name;
 //                array_merge($result['user'],  ['title' => $user->profile->position->name]);
             }
             return $result;

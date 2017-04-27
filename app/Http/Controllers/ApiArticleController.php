@@ -107,27 +107,30 @@ class ApiArticleController extends Controller
         $lastid = $request['lastid'];
         $from = ($request['page'] -1) * $this->articleLimit;
         $userid = $request['userid'];
-        $articles = array();
-        if($userid) {
-            $articles = Article::join('user_relations', 'user_relations.relation_id', '=', 'articles.created_by')
-                ->select('articles.*')
-                ->where('user_relations.user_id', $userid)
-                ->orWhere('articles.created_by', $userid);
-        } else {
-            $articles = Article::select('articles.*');
+        $articles = $this->loadArticlesWithUserid($userid, $lastid, $from);
+        if(!count($articles)) {
+            $this->loadArticlesWithUserid(0, $lastid, $from);
         }
-
-//            ->leftJoin('users', 'users.id', '=', 'articles.updated_by')
-//            ->leftJoin('users', 'users.id', '=', 'articles.original_id')
-
-        $articles = $articles ->where('status', '1');
-        if($lastid && $lastid > 0)
-            $articles = $articles->where('articles.id', '<=', $lastid);
-
-             $articles = $articles->orderBy('articles.updated_at', 'desc')
-                ->skip($from)
-                ->take($this->articleLimit)
-                ->get();
+//        if($userid) {
+//            $articles = Article::join('user_relations', 'user_relations.relation_id', '=', 'articles.created_by')
+//                ->select('articles.*')
+//                ->where('user_relations.user_id', $userid)
+//                ->orWhere('articles.created_by', $userid);
+//        } else {
+//            $articles = Article::select('articles.*');
+//        }
+//
+////            ->leftJoin('users', 'users.id', '=', 'articles.updated_by')
+////            ->leftJoin('users', 'users.id', '=', 'articles.original_id')
+//
+//        $articles = $articles ->where('status', '1');
+//        if($lastid && $lastid > 0)
+//            $articles = $articles->where('articles.id', '<=', $lastid);
+//
+//             $articles = $articles->orderBy('articles.updated_at', 'desc')
+//                ->skip($from)
+//                ->take($this->articleLimit)
+//                ->get();
         $acitivities = array();
         foreach ($articles as $article) {
             array_push($acitivities, [
@@ -151,6 +154,32 @@ class ApiArticleController extends Controller
             ]);
         }
         return $acitivities;
+    }
+
+    private function loadArticlesWithUserid($userid, $lastid, $from) {
+        $articles = array();
+        if($userid) {
+            $articles = Article::join('user_relations', 'user_relations.relation_id', '=', 'articles.created_by')
+                ->select('articles.*')
+                ->where('user_relations.user_id', $userid)
+                ->orWhere('articles.created_by', $userid);
+        } else {
+            $articles = Article::select('articles.*');
+        }
+
+//            ->leftJoin('users', 'users.id', '=', 'articles.updated_by')
+//            ->leftJoin('users', 'users.id', '=', 'articles.original_id')
+
+        $articles = $articles ->where('status', '1');
+        if($lastid && $lastid > 0)
+            $articles = $articles->where('articles.id', '<=', $lastid);
+
+        $articles = $articles->orderBy('articles.updated_at', 'desc')
+            ->skip($from)
+            ->take($this->articleLimit)
+            ->get();
+
+        return $articles;
     }
 
     public function loadComments($id, $page, $lastid, $limit = 20) {
