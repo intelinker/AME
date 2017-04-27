@@ -154,21 +154,30 @@ class ApiUserController extends Controller
             'email' => $email,
             'password' => $request['password'],
 
-        ]))
-            return ['result'=>'success', 'user'=>[
+        ])) {
+            $result = ['result'=>'success', 'user'=>[
                 'id' => $user->id,
                 'name' => $user->name,
                 'avatar' => $user->avatar,
                 'cover' =>$user->cover,
                 'is_person' => $user->is_person,
                 'self_intro' => $user->profile->self_intro,
-                'title' => $user->profile->title->name,
-                'position' => $user->profile->position->name,
                 'airport' =>$user->airport,
                 'following' => count($user->relation),
                 'followed' => count($user->related),
                 'uid' => $user->uid,
             ]];
+            if($user->profile && $user->profile->title) {
+                $result['user']['title'] =  $user->profile->title->name;
+//                array_merge($result['user'],  ['title' => $user->profile->title->name]);
+            }
+            if($user->profile && $user->profile->position) {
+                $result['user']['position'] =  $user->profile->position->name;
+//                array_merge($result['user'],  ['title' => $user->profile->position->name]);
+            }
+            return $result;
+        }
+
         return ['result' => 'error'];
     }
 

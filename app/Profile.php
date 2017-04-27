@@ -33,11 +33,11 @@ class Profile extends Model
     }
 
     public function title() {
-        return $this->belongsTo('App\UserTitle', 'title');
+        return $this->belongsTo('App\UserTitle', 'title_id');
     }
 
     public function position() {
-        return $this->belongsTo('App\UserPosition', 'position');
+        return $this->belongsTo('App\UserPosition', 'position_id');
     }
 
     public function relation() {
