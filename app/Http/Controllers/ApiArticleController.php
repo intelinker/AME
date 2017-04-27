@@ -108,7 +108,7 @@ class ApiArticleController extends Controller
         $from = ($request['page'] -1) * $this->articleLimit;
         $userid = $request['userid'];
         $articles = $this->loadArticlesWithUserid($userid, $lastid, $from);
-        if(!count($articles)) {
+        if(!$from && !count($articles)) {
             $articles = $this->loadArticlesWithUserid(0, $lastid, $from);
         }
 //        if($userid) {
