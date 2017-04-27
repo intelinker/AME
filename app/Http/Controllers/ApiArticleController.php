@@ -109,7 +109,7 @@ class ApiArticleController extends Controller
         $userid = $request['userid'];
         $articles = $this->loadArticlesWithUserid($userid, $lastid, $from);
         if(!count($articles)) {
-            $this->loadArticlesWithUserid(0, $lastid, $from);
+            $articles = $this->loadArticlesWithUserid(0, $lastid, $from);
         }
 //        if($userid) {
 //            $articles = Article::join('user_relations', 'user_relations.relation_id', '=', 'articles.created_by')
