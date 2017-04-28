@@ -145,7 +145,7 @@ class ApiArticleController extends Controller
 //                'user_name' => $article->user->name,
 //                'user_avatar' => $article->user->avatar,
                 'content' => $article->content,
-                'location_title' => $article->location ? $article->location->title : '',
+                'location_title' => $article->location,// ? $article->location->title : '',
                 'update_at' => $article->updated_at,
                 'total_comments' => count($article->comments),
                 'forwarded' => count($article->forwarded),
