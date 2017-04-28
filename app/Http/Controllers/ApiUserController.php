@@ -79,22 +79,22 @@ class ApiUserController extends Controller
             'avatar' => $user->avatar,
             'cover' =>$user->cover,
             'is_person' => $user->is_person,
-            'self_intro' => $user->profile->self_intro,
-//            'title' => $user->profile->title->name,
-//            'position' => $user->profile->position->positon,
+            'self_intro' => $user->profile ? $user->profile->self_intro : '',
+            'title' => $user->profile && $user->profile->title ? $user->profile->title->name : '',
+            'position' => $user->profile && $user->profile->position ? $user->profile->position->positon : '',
             'airport' =>$user->airport,
             'following' => count($user->relation),
             'followed' => count($user->related),
             'uid' => $user->uid,
         ];
-        if($user->profile && $user->profile->title) {
-            $result['user']['title'] =  $user->profile->title->name;
-//                array_merge($result['user'],  ['title' => $user->profile->title->name]);
-        }
-        if($user->profile && $user->profile->position) {
-            $result['user']['position'] =  $user->profile->position-->name;
-//                array_merge($result['user'],  ['title' => $user->profile->position->name]);
-        }
+//        if($user->profile && $user->profile->title) {
+//            $result['user']['title'] =  $user->profile->title->name;
+////                array_merge($result['user'],  ['title' => $user->profile->title->name]);
+//        }
+//        if($user->profile && $user->profile->position) {
+//            $result['user']['position'] =  $user->profile->position-->name;
+////                array_merge($result['user'],  ['title' => $user->profile->position->name]);
+//        }
         return $result;
     }
 
@@ -172,18 +172,20 @@ class ApiUserController extends Controller
                 'is_person' => $user->is_person,
                 'self_intro' => $user->profile->self_intro,
                 'airport' =>$user->airport,
+                'title' => $user->profile && $user->profile->title ? $user->profile->title->name : '',
+                'position' => $user->profile && $user->profile->position ? $user->profile->position->positon : '',
                 'following' => count($user->relation),
                 'followed' => count($user->related),
                 'uid' => $user->uid,
             ]];
-            if($user->profile && $user->profile->title) {
-                $result['user']['title'] =  $user->profile->title->name;
-//                array_merge($result['user'],  ['title' => $user->profile->title->name]);
-            }
-            if($user->profile && $user->profile->position) {
-                $result['user']['position'] =  $user->profile->position-->name;
-//                array_merge($result['user'],  ['title' => $user->profile->position->name]);
-            }
+//            if($user->profile && $user->profile->title) {
+//                $result['user']['title'] =  $user->profile->title->name;
+////                array_merge($result['user'],  ['title' => $user->profile->title->name]);
+//            }
+//            if($user->profile && $user->profile->position) {
+//                $result['user']['position'] =  $user->profile->position-->name;
+////                array_merge($result['user'],  ['title' => $user->profile->position->name]);
+//            }
             return $result;
         }
 
