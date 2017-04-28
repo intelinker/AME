@@ -17,7 +17,7 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->text('content')->nullable();
-            $table->integer('location')->nullable();
+            $table->integer('location_id')->nullable();
             $table->integer('language_id')->references('id')->on('languages');
             $table->tinyInteger('status')->default(1)->references('id')->on('article_status');
             $table->integer('original_id')->default(0);
