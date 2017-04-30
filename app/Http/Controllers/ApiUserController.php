@@ -287,8 +287,7 @@ class ApiUserController extends Controller
         $userid = $request['userid'];
         $relationid = $request['relationid'];
         $type = $request['type'];
-        $relation = UserRelation::select('relation_type')
-            ->where('user_id', $userid)
+        $relation = UserRelation::where('user_id', $userid)
             ->where('relation_id', $relationid)
             ->first();
         if($relation) {
