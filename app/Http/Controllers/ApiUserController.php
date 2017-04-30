@@ -258,10 +258,11 @@ class ApiUserController extends Controller
 
     public function relationUser(Request $request) {
         $userid = $request['userid'];
-        $user = User::findOrFail($userid);
+        $relationid = $request['relationid'];
+        $user = User::findOrFail($relationid);
         $relation = UserRelation::select('relation_type')
-            ->where('user_id', $request['myid'])
-            ->where('relation_id', $userid)
+            ->where('user_id', $userid)
+            ->where('relation_id', $relationid)
             ->first();
         $result = [
             'id' => $user->id,
