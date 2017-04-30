@@ -34,6 +34,6 @@ Route::group(['prefix'=>'v1'], function() {
     Route::post('privacyinfo', 'ApiSetupController@privacyInfo');
     Route::get('acitivities', 'ApiArticleController@followingActivities');
     Route::get('articlecomments/{$articleid}/{$page}/{$lastid}', 'ApiArticleController@loadComments');
-
+    Route::get('relationuser', 'ApiUserController@relationUser');
 
 });

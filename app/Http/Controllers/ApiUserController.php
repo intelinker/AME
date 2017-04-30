@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Profile;
 use App\Setup;
 use App\User;
+use App\UserRelation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -86,6 +87,7 @@ class ApiUserController extends Controller
             'following' => count($user->relation),
             'followed' => count($user->related),
             'uid' => $user->uid,
+//            'relation' => $user->relation,
         ];
 //        if($user->profile && $user->profile->title) {
 //            $result['user']['title'] =  $user->profile->title->name;
@@ -205,7 +207,7 @@ class ApiUserController extends Controller
         if (!file_exists($destPath)) {
             @mkdir($destPath );
         }
-        $filename = trim($userID.'_'.time().$file->getClientOriginalName(), ' ');
+        $filename = str_replace([' ', ':'], ['', ''], $userID.'_'.time().$file->getClientOriginalName());
         $filePath = $destPath.$filename;
         $thumbPath = $destPath.'thumb_'.$filename;
         $file->move($destPath, $filename);
@@ -252,6 +254,32 @@ class ApiUserController extends Controller
         $user->profile->self_intro = $request['selfintro'];
         $user->profile->save();
         return ['result'=>'success'];
+    }
+
+    public function relationUser(Request $request) {
+        $userid = $request['userid'];
+        $user = User::findOrFail($userid);
+        $relation = UserRelation::select('relation_type')
+            ->where('user_id', $request['myid'])
+            ->where('relation_id', $userid)
+            ->first();
+        $result = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'avatar' => $user->avatar,
+            'cover' =>$user->cover,
+            'is_person' => $user->is_person,
+            'self_intro' => $user->profile ? $user->profile->self_intro : '',
+            'title' => $user->profile && $user->profile->title ? $user->profile->title->name : '',
+            'position' => $user->profile && $user->profile->position ? $user->profile->position->positon : '',
+            'airport' =>$user->airport,
+            'following' => count($user->relation),
+            'followed' => count($user->related),
+            'uid' => $user->uid,
+            'relation' => $relation ? $relation : 1,
+
+        ];
+        return $result;
     }
 
 }
