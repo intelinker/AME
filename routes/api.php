@@ -35,5 +35,5 @@ Route::group(['prefix'=>'v1'], function() {
     Route::get('acitivities', 'ApiArticleController@followingActivities');
     Route::get('articlecomments/{$articleid}/{$page}/{$lastid}', 'ApiArticleController@loadComments');
     Route::get('relationuser', 'ApiUserController@relationUser');
-
+    Route::post('setrelation', 'ApiUserController@setRelation');
 });

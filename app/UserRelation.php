@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRelation extends Model
 {
     protected $fillable = [
-//        'title', 'description', 'content', 'avatar', 'created_by', 'updated_by',
+        'user_id', 'relation_id', 'relation_type', 'review_articles', 'articles_reviewed', 'notify_activities',
     ];
 
     public function user() {

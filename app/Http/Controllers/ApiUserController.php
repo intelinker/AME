@@ -282,4 +282,25 @@ class ApiUserController extends Controller
         return $result;
     }
 
+    public function setRelation(Request $request) {
+        $userid = $request['userid'];
+        $relationid = $request['relationid'];
+        $type = $request['type'];
+        $relation = UserRelation::select('relation_type')
+            ->where('user_id', $userid)
+            ->where('relation_id', $relationid)
+            ->first();
+        if($relation) {
+            $relation = UserRelation::where('id', $relation->id)->update([
+                'relation_type' => type,
+            ]);
+        } else {
+            $relation = UserRelation::create([
+               'user_id' => $userid,
+                'relation_id' => $relationid,
+                'relation_type' => $type,
+            ]);
+        }
+        return ['result' => $relation];
+    }
 }
