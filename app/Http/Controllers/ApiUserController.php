@@ -276,7 +276,7 @@ class ApiUserController extends Controller
             'following' => count($user->relation),
             'followed' => count($user->related),
             'uid' => $user->uid,
-            'relation' => $relation ? $relation : 1,
+            'relation' => $relation ? $relation['relation_type'] : 1,
 
         ];
         return $result;
@@ -292,7 +292,7 @@ class ApiUserController extends Controller
             ->first();
         if($relation) {
             $relation = UserRelation::where('id', $relation->id)->update([
-                'relation_type' => type,
+                'relation_type' => $type,
             ]);
         } else {
             $relation = UserRelation::create([
