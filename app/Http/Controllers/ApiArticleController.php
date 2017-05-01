@@ -188,7 +188,7 @@ class ApiArticleController extends Controller
         $from = ($page -1) * $limit;
         $comments = Comment::where('article_id', $id)
                         ->leftJoin('users', 'users.id', '=', 'comments.updated_by')
-                        ->select('comments.*', 'users.name', 'users.avatar');
+                        ->select('comments.*', 'user.id as user_id', 'users.name', 'users.avatar');
         if($lastid && $lastid > 0)
             $comments = $comments->where('comments.id', '<=', $lastid);
         $comments = $comments->skip($from)->take($limit)->get();
