@@ -15,13 +15,14 @@ class CreateExcelDocsTable extends Migration
     {
         Schema::create('excel_docs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('document_id')->references('id')->on('documents');
-            $table->string('MODEL');
-            $table->string('LOCATION');
+            $table->integer('document_id')->references('id')->on('documents');
+            $table->string('Model');
+            $table->string('Coordinate');
             $table->integer('ATA');
-            $table->integer('CB_DESIGNTION');
+            $table->string('C/B_Designation');
             $table->string('PNL');
             $table->string('FTN');
+            $table->string('Remark');
             $table->timestamps();
         });
     }

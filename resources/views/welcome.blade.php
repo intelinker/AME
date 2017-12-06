@@ -78,10 +78,13 @@
             @endif
 
             <div class="content">
+
                 <div class="title m-b-md">
                     AME
                 </div>
-
+                <div id="app">
+                    <example></example>
+                </div>
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
@@ -92,4 +95,5 @@
             </div>
         </div>
     </body>
+    <script src="/js/app.js"></script>
 </html>
